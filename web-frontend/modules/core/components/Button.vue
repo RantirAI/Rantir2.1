@@ -7,6 +7,7 @@
     :to="to"
     v-bind.prop="customBind"
     v-on="$listeners"
+    style="background-color:black !important; color:white;"
   >
     <i v-if="icon" class="button__icon" :class="icon" />
     <span v-if="hasSlot" class="button__label"><slot></slot></span>

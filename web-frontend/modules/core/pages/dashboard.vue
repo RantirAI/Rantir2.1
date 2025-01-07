@@ -4,6 +4,7 @@
       <DashboardVerifyEmail
         class="margin-top-0 margin-bottom-0"
       ></DashboardVerifyEmail>
+    
       <WorkspaceInvitation
         v-for="invitation in workspaceInvitations"
         :key="'invitation-' + invitation.id"

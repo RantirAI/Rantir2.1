@@ -49,11 +49,8 @@ else:
     BASEROW_PLUGIN_FOLDERS = []
 
 BASEROW_BACKEND_PLUGIN_NAMES = [d.name for d in BASEROW_PLUGIN_FOLDERS]
-BASEROW_OSS_ONLY = bool(os.getenv("BASEROW_OSS_ONLY", ""))
-if BASEROW_OSS_ONLY:
-    BASEROW_BUILT_IN_PLUGINS = []
-else:
-    BASEROW_BUILT_IN_PLUGINS = ["baserow_premium", "baserow_enterprise"]
+BASEROW_OSS_ONLY = bool(os.getenv("BASEROW_OSS_ONLY", "true"))
+BASEROW_BUILT_IN_PLUGINS = []
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if "SECRET_KEY" in os.environ:
@@ -91,7 +88,6 @@ INSTALLED_APPS = [
     "baserow.contrib.integrations",
     "baserow.contrib.builder",
     "baserow.contrib.dashboard",
-    *BASEROW_BUILT_IN_PLUGINS,
 ]
 
 
@@ -287,12 +283,6 @@ else:
         "database_fieldependency",
         "database_linkrowfield",
         "database_selectoption",
-        "baserow_premium_license",
-        "baserow_premium_licenseuser",
-        "baserow_enterprise_role",
-        "baserow_enterprise_roleassignment",
-        "baserow_enterprise_team",
-        "baserow_enterprise_teamsubject",
     ]
 
 # This list will have priority over CACHALOT_ONLY_CACHABLE_TABLES.

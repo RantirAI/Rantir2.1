@@ -1,9 +1,9 @@
 {
-  "name": "baserow",
+  "name": "webtir",
   "version": "1.30.1",
   "private": true,
-  "description": "Baserow: open source no-code database web frontend.",
-  "author": "Bram Wiepjes (Baserow)",
+  "description": "Webtir: open source no-code database web frontend.",
+  "author": "Bram Wiepjes (webtir)",
   "license": "MIT",
   "engines": {
     "node": ">=21.7.3 <22.0"

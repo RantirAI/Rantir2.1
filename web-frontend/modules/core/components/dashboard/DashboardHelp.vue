@@ -22,21 +22,24 @@
     <template #actions>
       <Button
         tag="a"
-        href="https://gitlab.com/baserow/baserow"
+        href="https://gitlab.com/rantir/rantir"
         target="_blank"
         rel="noopener noreferrer"
         type="secondary"
-        icon="baserow-icon-gitlab"
+        style="background-color:white;color:black;"
+
       >
-        {{ $t('dashboard.starOnGitlab') }}</Button
+      <img
+        src="@baserow/modules/core/static/img/devtir.png"
+        class="mr-4"
+
+      /> {{ $t('dashboard.starOnGitlab') }}</Button
       >
       <ButtonIcon
         v-tooltip="$t('dashboard.shareOnTwitter')"
         tag="a"
         tooltip-position="top"
-        :href="`https://twitter.com/intent/tweet?url=https://baserow.io&hashtags=opensource,nocode,database,baserow&text=${encodeURI(
-          $t('dashboard.tweetContent')
-        )}`"
+        href="https://x.com/rantircloud"
         target="_blank"
         rel="noopener noreferrer"
         icon="baserow-icon-twitter"
@@ -46,10 +49,7 @@
         tag="a"
         tooltip-position="top"
         icon="baserow-icon-reddit"
-        :href="
-          'https://www.reddit.com/submit?url=https://baserow.io&title=' +
-          encodeURI($t('dashboard.redditTitle'))
-        "
+        href="https://www.reddit.com/r/rantir/"
         target="_blank"
         rel="noopener noreferrer"
       ></ButtonIcon>
@@ -58,7 +58,7 @@
         tag="a"
         tooltip-position="top"
         icon="baserow-icon-facebook"
-        href="https://www.facebook.com/sharer/sharer.php?u=https://baserow.io"
+        href="https://www.facebook.com/profile.php?id=61568494167115"
         target="_blank"
         rel="noopener noreferrer"
       ></ButtonIcon>
@@ -67,7 +67,7 @@
         tag="a"
         tooltip-position="top"
         icon="baserow-icon-linkedin"
-        href="https://www.linkedin.com/sharing/share-offsite/?url=https://baserow.io"
+        href="https://www.linkedin.com/company/rantir"
         target="_blank"
         rel="noopener noreferrer"
       ></ButtonIcon>

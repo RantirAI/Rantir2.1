@@ -20,13 +20,13 @@ export default {
       type: String,
       default: 'green',
       validator: (value) =>
-        ['red', 'green', 'blue', 'magenta', 'purple', 'yellow'].includes(value),
+        ['red', 'green', 'blue', 'magenta', 'purple', 'yellow','mix'].includes(value),
     },
     type: {
       type: String,
       default: 'table',
       validator: (value) =>
-        ['calendar', 'table', 'kanban', 'gallery', 'form'].includes(value),
+        ['calendar', 'table', 'kanban', 'gallery', 'form','getstarted'].includes(value),
     },
   },
 }

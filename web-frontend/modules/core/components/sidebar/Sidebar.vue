@@ -1,10 +1,14 @@
 <template>
-  <div class="sidebar" :class="{ 'sidebar--collapsed': collapsed }">
+  <div class="sidebar" :class="{
+    'sidebar--collapsed': collapsed,
+    'sidebar--dark': isDarkTheme
+  }">
     <component
       :is="component"
       v-for="(component, index) in impersonateComponent"
       :key="index"
     ></component>
+
     <template v-if="showAdmin">
       <div class="sidebar__head">
         <a href="#" class="sidebar__back" @click="setShowAdmin(false)">
@@ -16,7 +20,9 @@
       </div>
       <SidebarAdmin v-show="!collapsed"></SidebarAdmin>
     </template>
+
     <template v-if="!showAdmin">
+      <!-- Custom bottom tab -->
       <a
         ref="workspaceContextAnchor"
         class="sidebar__workspaces-selector"
@@ -30,9 +36,18 @@
           )
         "
       >
+        <img
+          v-show="!collapsed"
+          :src="isDarkTheme
+            ? require('@baserow/modules/core/static/img/logoOnly-old.svg')
+            : require('@baserow/modules/core/static/img/logoOnly.svg')"
+          style="height: 30px; width: 30px; object-fit: contain"
+        />
         <Avatar
           :initials="selectedWorkspace.name || name | nameAbbreviation"
+          style="height: 30px; width: 30px"
         ></Avatar>
+
         <span
           v-show="!collapsed"
           class="sidebar__workspaces-selector-selected-workspace"
@@ -54,6 +69,7 @@
         :selected-workspace="selectedWorkspace"
         @toggle-admin="setShowAdmin($event)"
       ></SidebarUserContext>
+      <!-- End custom bottom tab -->
 
       <SidebarMenu
         v-show="!collapsed"
@@ -74,6 +90,7 @@
         :workspaces="workspaces"
       ></SidebarWithoutWorkspace>
     </template>
+
     <SidebarFoot
       :collapsed="collapsed"
       :width="width"
@@ -83,15 +100,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
-import SidebarUserContext from '@baserow/modules/core/components/sidebar/SidebarUserContext'
-import SidebarWithWorkspace from '@baserow/modules/core/components/sidebar/SidebarWithWorkspace'
-import SidebarWithoutWorkspace from '@baserow/modules/core/components/sidebar/SidebarWithoutWorkspace'
-import SidebarAdmin from '@baserow/modules/core/components/sidebar/SidebarAdmin'
-import SidebarFoot from '@baserow/modules/core/components/sidebar/SidebarFoot'
-import SidebarMenu from '@baserow/modules/core/components/sidebar/SidebarMenu'
-import SidebarAdminItem from './SidebarAdminItem.vue'
+import SidebarUserContext from '@baserow/modules/core/components/sidebar/SidebarUserContext';
+import SidebarWithWorkspace from '@baserow/modules/core/components/sidebar/SidebarWithWorkspace';
+import SidebarWithoutWorkspace from '@baserow/modules/core/components/sidebar/SidebarWithoutWorkspace';
+import SidebarAdmin from '@baserow/modules/core/components/sidebar/SidebarAdmin';
+import SidebarFoot from '@baserow/modules/core/components/sidebar/SidebarFoot';
+import SidebarMenu from '@baserow/modules/core/components/sidebar/SidebarMenu';
+import SidebarAdminItem from './SidebarAdminItem.vue';
 
 export default {
   name: 'Sidebar',
@@ -130,20 +147,35 @@ export default {
   data() {
     return {
       showAdmin: false,
+      isDarkTheme: false,
+    };
+  },
+  beforeCreate() {
+    // Add script to head to prevent flash
+    if (process.client) {
+      const savedTheme = localStorage.getItem('sidebarTheme')
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark-theme')
+      }
     }
   },
-
+  created() {
+    if (process.client) {
+      const savedTheme = window.localStorage.getItem('sidebarTheme')
+      this.isDarkTheme = savedTheme === 'dark'
+    }
+  },
   computed: {
     SidebarAdminItem() {
-      return SidebarAdminItem
+      return SidebarAdminItem;
     },
     impersonateComponent() {
       return Object.values(this.$registry.getAll('plugin'))
         .map((plugin) => plugin.getImpersonateComponent())
-        .filter((component) => component !== null)
+        .filter((component) => component !== null);
     },
     hasSelectedWorkspace() {
-      return Object.prototype.hasOwnProperty.call(this.selectedWorkspace, 'id')
+      return Object.prototype.hasOwnProperty.call(this.selectedWorkspace, 'id');
     },
     ...mapGetters({
       name: 'auth/getName',
@@ -151,22 +183,85 @@ export default {
         'notification/anyOtherWorkspaceWithUnread',
     }),
   },
-  created() {
-    // Checks whether the rendered page is an admin page. If so, switch the left sidebar
-    // navigation to the admin.
-    this.showAdmin = Object.values(this.$registry.getAll('admin')).some(
-      (adminType) => {
-        return this.$route.matched.some(
-          ({ name }) => name === adminType.routeName
-        )
-      }
-    )
-  },
   methods: {
     setShowAdmin(value) {
-      this.showAdmin = value
-      this.$forceUpdate()
+      this.showAdmin = value;
+      this.$forceUpdate();
+    },
+    toggleTheme(value) {
+      this.isDarkTheme = value;
+      if (process.client) {
+        window.localStorage.setItem('sidebarTheme', this.isDarkTheme ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark-theme', this.isDarkTheme);
+      }
     },
   },
-}
+};
 </script>
+
+<style>
+/* Add this outside of scoped to affect document root */
+:root.dark-theme .sidebar {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+/* Add styles for list items in dark mode */
+:root.dark-theme .sidebar li.active,
+:root.dark-theme .sidebar li:active {
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
+
+:root.dark-theme .sidebar li.active a,
+:root.dark-theme .sidebar li:active a {
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
+
+/* Prevent flash of wrong theme */
+.sidebar {
+  transition: background-color 0.3s ease;
+}
+</style>
+
+<style scoped>
+.sidebar {
+  background-color: #f8f9fa;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.sidebar--dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.sidebar__theme-toggle {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: inherit;
+}
+
+.theme-icon {
+  font-size: 20px;
+}
+</style>
+
+/* Prevent flash of light mode */
+body.sidebar--dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  transition: none;
+}
+</style>
+

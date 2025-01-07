@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div class="workflow-action__header">
       <div
         class="workflow-action__header-handle margin-right-1"
@@ -14,6 +15,7 @@
         @change="updateWorkflowAction({ type: $event })"
         @delete="$emit('delete')"
       />
+      
     </div>
     <component
       :is="workflowActionType.form"

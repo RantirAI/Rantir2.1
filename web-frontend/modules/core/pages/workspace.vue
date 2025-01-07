@@ -25,21 +25,16 @@
           :workspace="selectedWorkspace"
           :component-arguments="workspaceComponentArguments"
         ></component>
+
       </div>
       <WorkspaceContext
         ref="context"
         :workspace="selectedWorkspace"
         @rename="enableRename()"
       ></WorkspaceContext>
+
       <div class="dashboard__header-right">
-        <component
-          :is="component"
-          v-for="(component, index) in dashboardWorkspaceRowUsageComponent"
-          :key="index"
-          :workspace="selectedWorkspace"
-          :component-arguments="workspaceComponentArguments"
-          @workspace-updated="workspaceUpdated($event)"
-        ></component>
+        
         <span
           v-if="canCreateCreateApplication"
           ref="createApplicationContextLink"
@@ -76,9 +71,9 @@
             v-if="canCreateCreateApplication"
             class="dashboard__suggested-templates"
           >
-            <h4>{{ $t('dashboard.suggestedTemplates') }}</h4>
+            <h4><strong>Welcome back</strong></h4>
 
-            <div class="dashboard__suggested-templates-wrapper">
+            <div class="dashboard__resource dashboard__resource--large">
               <TemplateCard
                 v-for="(template, index) in templates"
                 :key="index"
@@ -87,20 +82,16 @@
                 @click="$refs.templateModal.show(template.slug)"
               ></TemplateCard>
 
-              <TemplateCard
-                class="dashboard__suggested-template"
-                view-more
-                @click="$refs.templateModal.show()"
-              ></TemplateCard>
+
             </div>
           </div>
           <div class="dashboard__resources">
-            <h4>{{ $t('dashboard.resources') }}</h4>
+            <h4><strong>Plugin & Template Marketplace</strong></h4>
             <div class="dashboard__resources-wrapper">
               <a
                 href="https://baserow.io/user-docs"
                 target="_new"
-                class="dashboard__resource dashboard__resource--large"
+                class="dashboard__resource dashboard__resource-inner"
               >
                 <div class="dashboard__resource-inner">
                   <span class="dashboard__resource-icon">
@@ -223,7 +214,7 @@ import WorkspaceContext from '@baserow/modules/core/components/workspace/Workspa
 import CreateApplicationContext from '@baserow/modules/core/components/application/CreateApplicationContext'
 import DashboardApplication from '@baserow/modules/core/components/dashboard/DashboardApplication'
 import WorkspaceInvitation from '@baserow/modules/core/components/workspace/WorkspaceInvitation'
-import TemplateCard from '@baserow/modules/core/components/template/TemplateCard'
+import TemplateCard from '@baserow/modules/core/components/template/customs/GetStarted'
 import editWorkspace from '@baserow/modules/core/mixins/editWorkspace'
 import DashboardVerifyEmail from '@baserow/modules/core/components/dashboard/DashboardVerifyEmail'
 import TemplateModal from '@baserow/modules/core/components/template/TemplateModal'
@@ -283,17 +274,12 @@ export default {
     return {
       workspaceComponentArguments: null,
       templates: [
-        {
-          name: 'Project Management',
-          slug: 'project-management',
-          type: 'calendar',
-          color: 'yellow',
-        },
+
         {
           name: 'Performance Reviews',
           slug: 'performance-reviews',
-          type: 'table',
-          color: 'purple',
+          type: 'getstarted',
+          color: 'mix',
         },
       ],
     }

@@ -1,5 +1,6 @@
 <template>
   <div>
+   
     <SidebarApplication
       ref="sidebarApplication"
       :workspace="workspace"
