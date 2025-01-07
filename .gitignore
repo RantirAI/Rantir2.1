@@ -163,6 +163,7 @@ __pycache__/
 
 # Build and development artifacts
 web-frontend/node_modules/
+web-frontend/core/
 web-frontend/.nuxt/
 web-frontend/dist/
 backend/media/
