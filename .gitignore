@@ -141,4 +141,33 @@ premium/web-frontend/package.json
 
 # Storybook
 web-frontend/.nuxt-storybook/
-web-frontend/storybook-static
+web-frontend/storybook-static Git LFS
+
+# Backend
+__pycache__/
+*.pyc
+venv/
+env/
+.env
+pip-log.txt
+*.sqlite3
+media/
+static/
+migrations/
+
+# Frontend
+node_modules/
+build/
+dist/
+.next/
+.nuxt/
+.cache/
+coverage/
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Package files
+package-lock.json
+yarn.lock
