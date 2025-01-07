@@ -152,3 +152,36 @@ backend/*.sqlite3
 web-frontend/node_modules/
 web-frontend/build/
 web-frontend/.env
+
+# Development environment files
+data/
+.venv/
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Build and development artifacts
+web-frontend/node_modules/
+web-frontend/.nuxt/
+web-frontend/dist/
+backend/media/
+backend/static/
+backend/baserow/static/
+
+# Database files
+*.sqlite3
+*.db
+
+# Local development settings
+.env.local
+.env.development.local
+
+# Docker related
+docker-compose.override.yml
+.docker/
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
