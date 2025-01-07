@@ -144,30 +144,11 @@ web-frontend/.nuxt-storybook/
 web-frontend/storybook-static Git LFS
 
 # Backend
-__pycache__/
-*.pyc
-venv/
-env/
-.env
-pip-log.txt
-*.sqlite3
-media/
-static/
-migrations/
+backend/__pycache__/
+backend/venv/
+backend/*.sqlite3
 
 # Frontend
-node_modules/
-build/
-dist/
-.next/
-.nuxt/
-.cache/
-coverage/
-.env.local
-.env.development
-.env.test
-.env.production
-
-# Package files
-package-lock.json
-yarn.lock
+web-frontend/node_modules/
+web-frontend/build/
+web-frontend/.env
