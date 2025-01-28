@@ -115,6 +115,11 @@ export const routes = [
     path: '/onboarding',
     component: path.resolve(__dirname, 'pages/onboarding.vue'),
   },
+  {
+    name: 'flows',
+    path: '/flows',
+    component: path.resolve(__dirname, 'pages/flows.vue'),
+  },
 ]
 
 if (process.env.NODE_ENV !== 'production') {
