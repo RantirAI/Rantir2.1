@@ -135,6 +135,24 @@
           <TrashModal ref="trashModal"></TrashModal>
         </div>
       </li>
+       <nuxt-link
+        v-slot="{ href, navigate, isExactActive }"
+        :to="{ name: 'flows' }"
+      >
+        <li
+          class="tree__item"
+          :class="{ active: isExactActive }"
+        >
+          <div class="tree__action sidebar__action">
+            <a :href="href" class="tree__link" @click="navigate">
+              <i class="tree__icon iconoir-flow"></i>
+              <span class="tree__link-text">
+                <span class="sidebar__item-name">Flows</span>
+              </span>
+            </a>
+          </div>
+        </li>
+      </nuxt-link>
     </ul>
   </div>
 </template>
