@@ -120,6 +120,11 @@ export const routes = [
     path: '/flows',
     component: path.resolve(__dirname, 'pages/flows.vue'),
   },
+  {
+    name: 'subscirptions',
+    path: '/subscriptions',
+    component: path.resolve(__dirname, 'pages/subscriptions.vue'),
+  },
 ]
 
 if (process.env.NODE_ENV !== 'production') {
