@@ -26,7 +26,7 @@
           </div>
         </li>
       </nuxt-link>
-
+     
       <li class="tree__item">
         <div class="tree__action tree__action--has-counter">
           <a
@@ -135,7 +135,7 @@
           <TrashModal ref="trashModal"></TrashModal>
         </div>
       </li>
-       <nuxt-link
+      <nuxt-link
         v-slot="{ href, navigate, isExactActive }"
         :to="{ name: 'flows' }"
       >
@@ -145,9 +145,27 @@
         >
           <div class="tree__action sidebar__action">
             <a :href="href" class="tree__link" @click="navigate">
-              <i class="tree__icon iconoir-flow"></i>
+              <i class="tree__icon iconoir-git-fork"></i>
               <span class="tree__link-text">
-                <span class="sidebar__item-name">Flows</span>
+                <span class="sidebar__item-name">Logic & Automations <span class="sidebartag">New</span></span>
+              </span>
+            </a>
+          </div>
+        </li>
+      </nuxt-link>
+      <nuxt-link
+        v-slot="{ href, navigate, isExactActive }"
+        :to="{ name: 'subscirptions' }"
+      >
+      <li
+          class="tree__item"
+          :class="{ active: isExactActive }"
+        >
+          <div class="tree__action sidebar__action">
+            <a :href="href" class="tree__link disabled">
+              <i class="tree__icon iconoir-credit-card"></i>
+              <span class="tree__link-text">
+                <span class="sidebar__item-name">Subscriptions & Users <span class="sidebartag">New</span></span>
               </span>
             </a>
           </div>

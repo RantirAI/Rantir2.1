@@ -33,7 +33,24 @@
     @include absolute(8px, 9px, auto, auto);
   }
 }
-
+.sidebar__item-name{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebartag{
+  flex: none;
+  border-radius: 4px;
+  background: #e8cb264d;
+  color: #7c6d0e;
+  padding: 0 8px;
+  line-height: 20px;
+  font-size: 10px;
+}
+.disabled{
+  opacity: 0.8;
+  pointer-events: none;
+}
 %tree-size {
   line-height: 32px;
 }
