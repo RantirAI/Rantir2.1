@@ -42,8 +42,8 @@ WORKDIR /baserow/web-frontend
 RUN yarn install && yarn cache clean
 
 COPY --chown=$UID:$GID ./web-frontend /baserow/web-frontend/
-COPY --chown=$UID:$GID ./premium/web-frontend /baserow/premium/web-frontend/
-COPY --chown=$UID:$GID ./enterprise/web-frontend /baserow/enterprise/web-frontend/
+#COPY --chown=$UID:$GID ./premium/web-frontend /baserow/premium/web-frontend/
+#COPY --chown=$UID:$GID ./enterprise/web-frontend /baserow/enterprise/web-frontend/
 COPY --chown=$UID:$GID ./deploy/plugins/*.sh /baserow/plugins/
 
 RUN dos2unix /baserow/web-frontend/docker/docker-entrypoint.sh && \
@@ -60,8 +60,8 @@ FROM base as dev
 COPY --chown=$UID:$GID ./tests /baserow/tests/
 
 # Create symlinks for jest tests
-RUN ln -s /baserow/web-frontend/node_modules/ /baserow/premium/web-frontend/node_modules \
-    && ln -s /baserow/web-frontend/node_modules/ /baserow/enterprise/web-frontend/node_modules
+#RUN ln -s /baserow/web-frontend/node_modules/ /baserow/premium/web-frontend/node_modules \
+#    && ln -s /baserow/web-frontend/node_modules/ /baserow/enterprise/web-frontend/node_modules
 
 # We don't bother running build-local in dev mode as it pre-compiles nuxt which won't
 # be used when running the nuxt dev server.

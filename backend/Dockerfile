@@ -77,8 +77,8 @@ COPY --chown=$UID:$GID ./docs /baserow/docs
 # TODO - This copy also re-copies the requirements above, meaning this will be re-run
 #        and not cached even though we already have separate layers above.
 COPY --chown=$UID:$GID ./backend /baserow/backend
-COPY --chown=$UID:$GID ./premium/backend /baserow/premium/backend
-COPY --chown=$UID:$GID ./enterprise/backend /baserow/enterprise/backend
+#COPY --chown=$UID:$GID ./premium/backend /baserow/premium/backend
+#COPY --chown=$UID:$GID ./enterprise/backend /baserow/enterprise/backend
 
 WORKDIR /baserow/backend
 
@@ -90,9 +90,9 @@ COPY --chown=$UID:$GID ./deploy/plugins/*.sh /baserow/plugins/
 
 RUN dos2unix /baserow/backend/docker/docker-entrypoint.sh && \
     chmod a+x /baserow/backend/docker/docker-entrypoint.sh && \
-    /baserow/venv/bin/pip install --no-cache-dir -e /baserow/backend/ && \
-    /baserow/venv/bin/pip install --no-cache-dir -e /baserow/premium/backend/ && \
-    /baserow/venv/bin/pip install --no-cache-dir -e /baserow/enterprise/backend/
+    /baserow/venv/bin/pip install --no-cache-dir -e /baserow/backend/
+    #/baserow/venv/bin/pip install --no-cache-dir -e /baserow/premium/backend/ && \
+    #/baserow/venv/bin/pip install --no-cache-dir -e /baserow/enterprise/backend/
 
 HEALTHCHECK --interval=60s CMD ["/bin/bash", "/baserow/backend/docker/docker-entrypoint.sh", "backend-healthcheck"]
 ENTRYPOINT ["/usr/bin/tini", "--", "/bin/bash", "/baserow/backend/docker/docker-entrypoint.sh"]

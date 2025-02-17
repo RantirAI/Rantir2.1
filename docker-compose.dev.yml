@@ -40,8 +40,8 @@ services:
       - "${HOST_PUBLISH_IP:-127.0.0.1}:${BASEROW_BACKEND_DEBUGGER_PORT:-5678}:${BASEROW_BACKEND_DEBUGGER_PORT:-5678}"
     volumes:
       - ./backend:/baserow/backend
-      - ./premium/backend/:/baserow/premium/backend
-      - ./enterprise/backend/:/baserow/enterprise/backend
+      #- ./premium/backend/:/baserow/premium/backend
+      #- ./enterprise/backend/:/baserow/enterprise/backend
       - ./deploy/plugins/install_plugin.sh:/baserow/plugins/install_plugin.sh
       - ./tests:/baserow/tests
     # Open stdin and tty so when attaching key input works as expected.
@@ -68,8 +68,8 @@ services:
       # Override the above mounts for node_modules so we use the node_modules built
       # directly into the image instead of whatever is on your local filesystem.
       - /baserow/web-frontend/node_modules
-      - ./premium/web-frontend/:/baserow/premium/web-frontend
-      - ./enterprise/web-frontend/:/baserow/enterprise/web-frontend
+      #- ./premium/web-frontend/:/baserow/premium/web-frontend
+      #- ./enterprise/web-frontend/:/baserow/enterprise/web-frontend
       - ./tests/:/baserow/tests
     # Open stdin and tty so when attaching key input works as expected.
     stdin_open: true
@@ -99,8 +99,8 @@ services:
       # Override the above mounts for node_modules so we use the node_modules built
       # directly into the image instead of whatever is on your local filesystem.
       - /baserow/web-frontend/node_modules
-      - ./premium/web-frontend/:/baserow/premium/web-frontend
-      - ./enterprise/web-frontend/:/baserow/enterprise/web-frontend
+      #- ./premium/web-frontend/:/baserow/premium/web-frontend
+      #- ./enterprise/web-frontend/:/baserow/enterprise/web-frontend
       - ./tests/:/baserow/tests
     # Open stdin and tty so when attaching key input works as expected.
     stdin_open: true
@@ -123,8 +123,8 @@ services:
       - BASEROW_DANGEROUS_SILKY_ANALYZE_QUERIES
     volumes:
       - ./backend:/baserow/backend
-      - ./premium/backend/:/baserow/premium/backend
-      - ./enterprise/backend/:/baserow/enterprise/backend
+      #- ./premium/backend/:/baserow/premium/backend
+      #- ./enterprise/backend/:/baserow/enterprise/backend
     # Open stdin and tty so when attaching key input works as expected.
     stdin_open: true
     tty: true
@@ -148,8 +148,8 @@ services:
     command: "watch-py celery-exportworker"
     volumes:
       - ./backend:/baserow/backend
-      - ./premium/backend/:/baserow/premium/backend
-      - ./enterprise/backend/:/baserow/enterprise/backend
+      #- ./premium/backend/:/baserow/premium/backend
+      #- ./enterprise/backend/:/baserow/enterprise/backend
     # Open stdin and tty so when attaching key input works as expected.
     stdin_open: true
     tty: true
@@ -172,8 +172,8 @@ services:
     command: "watch-py celery-beat"
     volumes:
       - ./backend:/baserow/backend
-      - ./premium/backend/:/baserow/premium/backend
-      - ./enterprise/backend/:/baserow/enterprise/backend
+      #- ./premium/backend/:/baserow/premium/backend
+      #- ./enterprise/backend/:/baserow/enterprise/backend
     # Open stdin and tty so when attaching key input works as expected.
     stdin_open: true
     tty: true

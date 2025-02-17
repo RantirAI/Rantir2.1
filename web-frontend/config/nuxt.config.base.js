@@ -1,5 +1,5 @@
 export default function (
-  base = '@',
+  base = '@'
   //premiumBase = '@/../premium/web-frontend',
   //enterpriseBase = '@/../enterprise/web-frontend'
 ) {
