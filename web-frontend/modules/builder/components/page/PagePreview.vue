@@ -1,6 +1,6 @@
 <template>
   <div class="page-builder-layout">
-    <ElementsSideBar ref="elementsSideBar" :page="currentPage" />
+    <!-- <ElementsSideBar ref="elementsSideBar" :page="currentPage" /> -->
 
     <div
       class="page-preview__wrapper"
@@ -122,7 +122,7 @@ import PreviewNavigationBar from '@baserow/modules/builder/components/page/Previ
 import { DIRECTIONS, PAGE_PLACES } from '@baserow/modules/builder/enums'
 import AddElementModal from '@baserow/modules/builder/components/elements/AddElementModal.vue'
 import ThemeProvider from '@baserow/modules/builder/components/theme/ThemeProvider.vue'
-import ElementsSideBar from '../elements/ElementsSideBar.vue'
+// import ElementsSideBar from '../elements/ElementsSideBar.vue'
 export default {
   name: 'PagePreview',
   components: {
@@ -130,7 +130,7 @@ export default {
     AddElementModal,
     ElementPreview,
     PreviewNavigationBar,
-    ElementsSideBar
+    // ElementsSideBar
   },
   inject: ['builder', 'currentPage', 'workspace'],
   data() {
