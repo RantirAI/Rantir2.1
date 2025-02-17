@@ -2,6 +2,8 @@
 
 ## Steps to run dev env locally via docker
 
+### First Option
+
 - Clone the repo 
 
    - git clone -b test git@github.com:RantirAI/Rantir2.1.git
@@ -28,6 +30,25 @@
 
 
  
-## Watch the Video
+### Watch the Video
 [Watch the video](assets/video.webm)
+
+### OPTION 2
+- Clone the repo
+
+   - git clone -b test git@github.com:RantirAI/Rantir2.1.git
+
+- cd into Rantir2.1
+
+  - cd Rantir2.1
+
+- Copy .env.dev.example to .env
+
+  - cp .env.dev.example .env
+
+- Replace the values of uid and guid in .env as 9999
+
+- Run the following command to build and run the only required containers for the app
+
+  - docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build web-frontend
 
