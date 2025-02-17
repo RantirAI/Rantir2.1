@@ -12,13 +12,13 @@
 
 - create .nuxt and .nuxt  .nuxt-storybook in web-frontend directory and change permission to read and write by everyone
 
- -  mkdir web-frontend/.nuxt && chmod -R 777 web-frontend/.nuxt
+  -  mkdir web-frontend/.nuxt && chmod -R 777 web-frontend/.nuxt
 
- -  mkdir web-frontend/.nuxt-storybook && chmod -R 777 web-frontend/.nuxt-storybook
+  -  mkdir web-frontend/.nuxt-storybook && chmod -R 777 web-frontend/.nuxt-storybook
 
 - change permission for backend email compiler for read and write in backend directory
 
-   - chmod -R 777 backend/email_compiler
+  - chmod -R 777 backend/email_compiler
 
 - Replace the values of group id ( gid) and userid (uid) in .env.dev.example  by getting your userid and groupid 
 
