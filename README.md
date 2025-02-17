@@ -12,7 +12,7 @@
  
   - cd Rantir2.1
 
-- create .nuxt and .nuxt  .nuxt-storybook in web-frontend directory and change permission to read and write by everyone
+- create .nuxt and .nuxt-storybook in web-frontend directory and change permission to read and write by everyone
 
   -  mkdir web-frontend/.nuxt && chmod -R 777 web-frontend/.nuxt
 
@@ -48,7 +48,10 @@
 
 - Replace the values of uid and guid in .env as 9999
 
+- create .nuxt in web-frontend directory and change permission to read and write by everyone
+
+  - mkdir web-frontend/.nuxt && chmod -R 777 web-frontend/.nuxt
+
 - Run the following command to build and run the only required containers for the app
 
   - docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build web-frontend
-
