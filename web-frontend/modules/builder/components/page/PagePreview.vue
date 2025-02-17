@@ -1,114 +1,118 @@
 <template>
-  <div
-    class="page-preview__wrapper"
-    :class="`page-preview__wrapper--${deviceType.type}`"
-    @click.self="actionSelectElement({ element: null })"
-  >
-    <PreviewNavigationBar :page="currentPage" :style="{ maxWidth }" />
-    <div ref="preview" class="page-preview" :style="{ 'max-width': maxWidth }">
-      <div
-        ref="previewScaled"
-        class="page-preview__scaled"
-        tabindex="0"
-        @keydown="handleKeyDown"
-      >
-        <ThemeProvider class="page">
-          <template v-if="headerElements.length !== 0">
-            <header
-              class="page__header"
-              :class="{
-                'page__header--element-selected':
-                  pageSectionWithSelectedElement === 'header',
-              }"
-            >
-              <ElementPreview
-                v-for="(element, index) in headerElements"
-                :key="element.id"
-                :element="element"
-                :is-first-element="index === 0"
-                :is-copying="copyingElementIndex === index"
-                :application-context-additions="{
-                  recordIndexPath: [],
+  <div class="page-builder-layout">
+    <ElementsSideBar ref="elementsSideBar" :page="currentPage" />
+
+    <div
+      class="page-preview__wrapper"
+      :class="`page-preview__wrapper--${deviceType.type}`"
+      @click.self="actionSelectElement({ element: null })"
+
+    >
+      <PreviewNavigationBar :page="currentPage" :style="{ maxWidth }" />
+
+      <div ref="preview" class="page-preview" :style="{ 'max-width': maxWidth}">
+        <div
+          ref="previewScaled"
+          class="page-preview__scaled"
+          tabindex="0"
+          @keydown="handleKeyDown"
+        >
+          <ThemeProvider class="page">
+            <template v-if="headerElements.length !== 0">
+              <header
+                class="page__header"
+                :class="{
+                  'page__header--element-selected':
+                    pageSectionWithSelectedElement === 'header',
                 }"
-                @move="moveElement($event)"
-              />
-            </header>
-            <div class="page-preview__separator">
-              <span class="page-preview__separator-label">
-                {{ $t('pagePreview.header') }}
-              </span>
-            </div>
-          </template>
-          <template v-if="elements.length === 0">
-            <CallToAction
-              class="page-preview__empty"
-              icon="baserow-icon-plus"
-              icon-color="neutral"
-              icon-size="large"
-              icon-rounded
-              @click="$refs.addElementModal.show()"
-            >
-              {{ $t('pagePreview.emptyMessage') }}
-            </CallToAction>
-          </template>
-          <template v-else>
-            <div
-              class="page__content"
-              :class="{
-                'page__content--element-selected':
-                  pageSectionWithSelectedElement === 'content',
-              }"
-            >
-              <ElementPreview
-                v-for="(element, index) in elements"
-                :key="element.id"
-                :element="element"
-                :is-first-element="index === 0 && headerElements.length === 0"
-                :is-copying="copyingElementIndex === index"
-                :application-context-additions="{
-                  recordIndexPath: [],
+              >
+                <ElementPreview
+                  v-for="(element, index) in headerElements"
+                  :key="element.id"
+                  :element="element"
+                  :is-first-element="index === 0"
+                  :is-copying="copyingElementIndex === index"
+                  :application-context-additions="{
+                    recordIndexPath: [],
+                  }"
+                  @move="moveElement($event)"
+                />
+              </header>
+              <div class="page-preview__separator">
+                <span class="page-preview__separator-label">
+                  {{ $t('pagePreview.header') }}
+                </span>
+              </div>
+            </template>
+            <template v-if="elements.length === 0">
+              <CallToAction
+                class="page-preview__empty"
+                icon="baserow-icon-plus"
+                icon-color="neutral"
+                icon-size="large"
+                icon-rounded
+                @click="$refs.elementsSideBar.show()"
+              >
+                {{ $t('pagePreview.emptyMessage') }}
+              </CallToAction>
+            </template>
+            <template v-else>
+              <div
+                class="page__content"
+                :class="{
+                  'page__content--element-selected':
+                    pageSectionWithSelectedElement === 'content',
                 }"
-                @move="moveElement($event)"
-              />
-            </div>
-          </template>
-          <template v-if="footerElements.length !== 0">
-            <div class="page-preview__separator">
-              <span class="page-preview__separator-label">
-                {{ $t('pagePreview.footer') }}
-              </span>
-            </div>
-            <footer
-              class="page__footer"
-              :class="{
-                'page__footer--element-selected':
-                  pageSectionWithSelectedElement === 'footer',
-              }"
-            >
-              <ElementPreview
-                v-for="(element, index) in footerElements"
-                :key="element.id"
-                :element="element"
-                :is-first-element="
-                  index === 0 &&
-                  headerElements.length === 0 &&
-                  elements.length === 0
-                "
-                :is-copying="copyingElementIndex === index"
-                :application-context-additions="{
-                  recordIndexPath: [],
+              >
+                <ElementPreview
+                  v-for="(element, index) in elements"
+                  :key="element.id"
+                  :element="element"
+                  :is-first-element="index === 0 && headerElements.length === 0"
+                  :is-copying="copyingElementIndex === index"
+                  :application-context-additions="{
+                    recordIndexPath: [],
+                  }"
+                  @move="moveElement($event)"
+                />
+              </div>
+            </template>
+            <template v-if="footerElements.length !== 0">
+              <div class="page-preview__separator">
+                <span class="page-preview__separator-label">
+                  {{ $t('pagePreview.footer') }}
+                </span>
+              </div>
+              <footer
+                class="page__footer"
+                :class="{
+                  'page__footer--element-selected':
+                    pageSectionWithSelectedElement === 'footer',
                 }"
-                @move="moveElement($event)"
-              />
-            </footer>
-          </template>
-        </ThemeProvider>
+              >
+                <ElementPreview
+                  v-for="(element, index) in footerElements"
+                  :key="element.id"
+                  :element="element"
+                  :is-first-element="
+                    index === 0 &&
+                    headerElements.length === 0 &&
+                    elements.length === 0
+                  "
+                  :is-copying="copyingElementIndex === index"
+                  :application-context-additions="{
+                    recordIndexPath: [],
+                  }"
+                  @move="moveElement($event)"
+                />
+              </footer>
+            </template>
+          </ThemeProvider>
+        </div>
       </div>
-      <AddElementModal ref="addElementModal" :page="currentPage" />
     </div>
   </div>
 </template>
-
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
@@ -118,7 +122,7 @@ import PreviewNavigationBar from '@baserow/modules/builder/components/page/Previ
 import { DIRECTIONS, PAGE_PLACES } from '@baserow/modules/builder/enums'
 import AddElementModal from '@baserow/modules/builder/components/elements/AddElementModal.vue'
 import ThemeProvider from '@baserow/modules/builder/components/theme/ThemeProvider.vue'
-
+import ElementsSideBar from '../elements/ElementsSideBar.vue'
 export default {
   name: 'PagePreview',
   components: {
@@ -126,6 +130,7 @@ export default {
     AddElementModal,
     ElementPreview,
     PreviewNavigationBar,
+    ElementsSideBar
   },
   inject: ['builder', 'currentPage', 'workspace'],
   data() {
@@ -499,3 +504,22 @@ export default {
   },
 }
 </script>
+<style>
+.page-builder-layout {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+}
+
+.page-preview__wrapper {
+  flex: 1;
+  overflow: auto;
+  height: 100vh;
+  position: relative;
+  background-color: #f0f0f0; /* Soft light grey */
+}
+
+/* Keep your other existing styles */
+</style>
