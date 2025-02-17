@@ -15,6 +15,7 @@ import posthog
 import sentry_sdk
 from corsheaders.defaults import default_headers
 from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.scrubber import DEFAULT_DENYLIST, EventScrubber
 
 from baserow.cachalot_patch import patch_cachalot_for_baserow
 from baserow.config.settings.utils import (
@@ -50,7 +51,10 @@ else:
 
 BASEROW_BACKEND_PLUGIN_NAMES = [d.name for d in BASEROW_PLUGIN_FOLDERS]
 BASEROW_OSS_ONLY = bool(os.getenv("BASEROW_OSS_ONLY", "true"))
-BASEROW_BUILT_IN_PLUGINS = []
+if BASEROW_OSS_ONLY:
+    BASEROW_BUILT_IN_PLUGINS = []
+else:
+    BASEROW_BUILT_IN_PLUGINS = ["baserow_premium", "baserow_enterprise"]
 
 # SECURITY WARNING: keep the secret key used in production secret!
 if "SECRET_KEY" in os.environ:
@@ -88,6 +92,7 @@ INSTALLED_APPS = [
     "baserow.contrib.integrations",
     "baserow.contrib.builder",
     "baserow.contrib.dashboard",
+    *BASEROW_BUILT_IN_PLUGINS,
 ]
 
 
@@ -283,6 +288,12 @@ else:
         "database_fieldependency",
         "database_linkrowfield",
         "database_selectoption",
+        #"baserow_premium_license",
+        #"baserow_premium_licenseuser",
+        #"baserow_enterprise_role",
+        #"baserow_enterprise_roleassignment",
+        #"baserow_enterprise_team",
+        #"baserow_enterprise_teamsubject",
     ]
 
 # This list will have priority over CACHALOT_ONLY_CACHABLE_TABLES.
@@ -301,13 +312,18 @@ CACHALOT_UNCACHABLE_TABLES = [
     "django_migrations",
     "core_action",
     "database_token",
-    "baserow_enterprise_auditlogentry",
+    #"baserow_enterprise_auditlogentry",
 ]
 
 BUILDER_PUBLICLY_USED_PROPERTIES_CACHE_TTL_SECONDS = int(
     # Default TTL is 10 minutes: 60 seconds * 10
     os.getenv("BASEROW_BUILDER_PUBLICLY_USED_PROPERTIES_CACHE_TTL_SECONDS")
     or 600
+)
+BUILDER_DISPATCH_ACTION_CACHE_TTL_SECONDS = int(
+    # Default TTL is 5 minutes
+    os.getenv("BASEROW_BUILDER_DISPATCH_ACTION_CACHE_TTL_SECONDS")
+    or 300
 )
 
 
@@ -483,7 +499,7 @@ SPECTACULAR_SETTINGS = {
         "name": "MIT",
         "url": "https://gitlab.com/baserow/baserow/-/blob/master/LICENSE",
     },
-    "VERSION": "1.30.1",
+    "VERSION": "1.31.1",
     "SERVE_INCLUDE_SCHEMA": False,
     "TAGS": [
         {"name": "Settings"},
@@ -505,6 +521,7 @@ SPECTACULAR_SETTINGS = {
         {"name": "Database table view sortings"},
         {"name": "Database table view decorations"},
         {"name": "Database table view groupings"},
+        {"name": "Database table view export"},
         {"name": "Database table grid view"},
         {"name": "Database table gallery view"},
         {"name": "Database table form view"},
@@ -1262,12 +1279,14 @@ for plugin in [*BASEROW_BUILT_IN_PLUGINS, *BASEROW_BACKEND_PLUGIN_NAMES]:
 
 SENTRY_BACKEND_DSN = os.getenv("SENTRY_BACKEND_DSN")
 SENTRY_DSN = SENTRY_BACKEND_DSN or os.getenv("SENTRY_DSN")
+SENTRY_DENYLIST = DEFAULT_DENYLIST + ["username", "email", "name"]
 
 if SENTRY_DSN:
     sentry_sdk.init(
         dsn=SENTRY_DSN,
         integrations=[DjangoIntegration(signals_spans=False, middleware_spans=False)],
         send_default_pii=False,
+        event_scrubber=EventScrubber(recursive=True, denylist=SENTRY_DENYLIST),
         environment=os.getenv("SENTRY_ENVIRONMENT", ""),
     )
 
