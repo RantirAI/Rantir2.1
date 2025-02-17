@@ -19,9 +19,8 @@
 - change permission for backend email compiler for read and write in backend directory
 
   - chmod -R 777 backend/email_compiler
-  - chmod -R 777  backend/src/baserow/core/templates/baserow/core
 
-- Replace the values of group id ( gid) and userid (uid) in .env.dev.example  by getting your userid and groupid 
+  - chmod -R 777  backend/src/baserow/core/templates/baserow/core
 
 - Build the images using this command
 
