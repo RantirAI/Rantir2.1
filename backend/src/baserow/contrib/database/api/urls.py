@@ -9,8 +9,14 @@ from .tables import urls as table_urls
 from .tokens import urls as token_urls
 from .views import urls as view_urls
 from .webhooks import urls as webhook_urls
-from baserow.contrib.database.api.commerce_api import (
-    create_order_or_subscription, stripe_webhook, paypal_webhook
+from baserow.contrib.database.api.commerce_subscription_api import (
+    create_order_or_subscription, 
+    stripe_webhook, 
+    paypal_webhook, 
+    get_subscription_overview,
+    get_databases_and_user_groups,
+    get_subscription_plans,
+    create_user_group
 )
 
 app_name = "baserow.contrib.database.api"
@@ -28,4 +34,8 @@ urlpatterns = [
     path('commerce/order/', create_order_or_subscription, name='create_order_or_subscription'),
     path('commerce/webhook/stripe/', stripe_webhook, name='stripe_webhook'),
     path('commerce/webhook/paypal/', paypal_webhook, name='paypal_webhook'),
+    path('commerce/subscriptions/overview/', get_subscription_overview, name='get_subscription_overview'),
+    path('commerce/databases/', get_databases_and_user_groups, name='get_databases_and_user_groups'),
+    path('commerce/plans/', get_subscription_plans, name='get_subscription_plans'),
+    path('commerce/user-group/', create_user_group, name='create_user_group'),
 ]
