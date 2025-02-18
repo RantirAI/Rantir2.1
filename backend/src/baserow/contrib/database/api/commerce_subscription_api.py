@@ -1,11 +1,95 @@
-import paypalrestsdk
-import stripe
+# 🔹 Imports (Keep at the top)
 import uuid
 import json
+import paypalrestsdk
+import stripe
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from baserow.contrib.database.models import Table, Row
 from django.views.decorators.csrf import csrf_exempt
+
+# ============================
+# 📌 EXISTING ORDER & PAYMENT FUNCTIONS (KEEP)
+# ============================
+
+# Your existing order handling, Stripe/PayPal checkout, and webhook functions should remain.
+
+# ============================
+# 📌 NEW SUBSCRIPTION DASHBOARD API (ADD HERE)
+# ============================
+
+@api_view(['GET'])
+def get_subscription_overview(request):
+    """Fetches subscription dashboard data including user counts, revenue, and signups."""
+    try:
+        # Dummy data structure (Replace with actual Baserow queries)
+        response_data = {
+            "total_members": 2300,
+            "signups_last_month": 24,
+            "paid_members": 324,
+            "monthly_revenue": 12450,
+        }
+        return Response(response_data, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)
+
+# ============================
+# 📌 NEW DATABASE & USER GROUP API (ADD HERE)
+# ============================
+
+@api_view(['GET'])
+def get_databases_and_user_groups(request):
+    """Fetches available databases and their associated user groups."""
+    try:
+        response_data = {
+            "databases": [
+                {"id": 1, "name": "Truck Users"},
+                {"id": 2, "name": "Uncategorized"},
+            ],
+            "user_groups": [
+                {"id": 101, "name": "Truck Drivers"},
+                {"id": 102, "name": "Uncategorized"},
+            ],
+        }
+        return Response(response_data, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)
+
+@api_view(['GET'])
+def get_subscription_plans(request):
+    """Fetches available subscription plans."""
+    try:
+        response_data = {
+            "plans": [
+                {"id": 1, "name": "Example Plan"},
+                {"id": 2, "name": "Example 2 Plan"},
+                {"id": 3, "name": "Exmaple 3 Plan"},
+            ]
+        }
+        return Response(response_data, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)
+
+# ============================
+# 📌 NEW USER GROUP CREATION API (ADD HERE)
+# ============================
+
+@api_view(['POST'])
+def create_user_group(request):
+    """Creates a new user group and assigns it to a database & plan."""
+    try:
+        data = request.data
+        user_group_id = str(uuid.uuid4())  # Generate unique ID
+        new_user_group = {
+            "id": user_group_id,
+            "name": data.get("name"),
+            "database_id": data.get("database_id"),
+            "plan_id": data.get("plan_id"),
+        }
+        # Simulating database insert (Replace with actual Baserow logic)
+        return Response({"message": "User group created successfully", "data": new_user_group}, status=201)
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)
 
 # Stripe API Key
 stripe.api_key = "sk_test_XXXX"
