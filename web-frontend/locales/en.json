@@ -83,10 +83,15 @@
     "file": "my device",
     "url": "a URL"
   },
+  "subscription": {
+    "name":"Name",
+    "newUserGroup" : "Create New User Group"
+  },
   "field": {
     "emailAddress": "E-mail address"
   },
   "error": {
+    "thisFieldIsRequired": "This field is required.",
     "invalidEmail": "Please enter a valid e-mail address.",
     "invalidNumber": "The field must be a number.",
     "notMatchingPassword": "This field must match your password field.",

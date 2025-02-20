@@ -422,30 +422,36 @@
     background: transparent;
     margin-top: 22px;
 }
-.new_database_button{
+.button--transparent{
     display: flex;
     margin-top: 10px !important;
-width: 173.25px;
-height: 36px;
-padding: 6px 3.75px;
-justify-content: center;
-align-items: center;
-gap: 7.5px;
-flex-shrink: 0;
-border-radius: 4.5px;
-border: 0.75px solid #ABABAB;
-box-shadow: 0px 0.75px 1.5px 0px rgba(7, 8, 16, 0.10);
-color: #404040;
-text-align: center;
-font-family: Inter;
-font-size: 12px;
-font-style: normal;
-font-weight: 600;
-line-height: 15px; /* 107.143% */
-margin-left: auto;
-background: transparent;
+    width: 173.25px;
+    height: 36px;
+    padding: 6px 3.75px;
+    justify-content: center;
+    align-items: center;
+    gap: 7.5px;
+    flex-shrink: 0;
+    border-radius: 4.5px;
+    border: 0.75px solid #ABABAB;
+    box-shadow: 0px 0.75px 1.5px 0px rgba(7, 8, 16, 0.10);
+    color: #404040;
+    text-align: center;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 15px; /* 107.143% */
+    margin-left: auto;
+    background: transparent;
 }
-.new_user_group{
+
+.button--transparent:hover{
+    background: #000 !important;
+    color: #fff;
+}
+
+.button--action{
     margin-top: 59px;
     display: flex;
     width: 231px;
@@ -456,17 +462,17 @@ background: transparent;
     gap: 10px;
     flex-shrink: 0;
     border-radius: 6px;
-    background: #5190EF;
+    background: #5190EF !important;
     box-shadow: 0px 1px 2px 0px rgba(7, 8, 16, 0.10);
     border: 0;
     margin-left: auto;
     color: #FFF;
-text-align: center;
-font-family: Inter;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: 18px; /* 125% */
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px; /* 125% */
 }
 .new-lable{
     color: #363636;

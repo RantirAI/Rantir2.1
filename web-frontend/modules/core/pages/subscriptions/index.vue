@@ -3,10 +3,9 @@
         <div class="ra-header-container">
             <!-- Title Section -->
             <div class="ra-title-section">
-                <h2>Integrations</h2>
+                <h2>Subscriptions</h2>
                 <span>New</span>
             </div>
-
             <!-- Buttons Section -->
             <div class="ra-buttons-container">
                 <!-- Settings Button -->
@@ -45,7 +44,7 @@
 
                 <!-- Integrations Button -->
 
-                <nuxt-link :to="{ name: 'integrations' }">
+                <nuxt-link :to="{ name: 'flows' }">
                     <button class="ra-nav-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                             <path
@@ -54,7 +53,7 @@
                             <path
                                 d="M2.64633 5.47022L8.78147 8.87863C8.91739 8.95414 9.08264 8.95414 9.21855 8.87863L15.375 5.45837"
                                 stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M9 15.75V9" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                            <path d="M9 15.75V 9" stroke="black" stroke-width="1.5" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
                         Integrations
@@ -101,7 +100,7 @@
                     <div class="ra-month">
                         <div class="ra-last">
                             <strong>
-                                23,00
+                                {{ subscriptionOverView?.total_members ? numberFormat(subscriptionOverView?.total_members) : 0 }}
                             </strong>
                             <div class="ra-last-content">
                                 <span>
@@ -121,7 +120,7 @@
                         <div class="ra-month-sign">
                             <div class="ra-last">
                                 <strong>
-                                    24
+                                    {{ subscriptionOverView?.signups_last_month ? numberFormat(subscriptionOverView?.signups_last_month) : 0 }}
                                 </strong>
                             </div>
                             <div class="ra-low">
@@ -134,7 +133,7 @@
                         <div class="ra-month-sign">
                             <div class="ra-last">
                                 <strong>
-                                    24
+                                    {{ subscriptionOverView?.paid_members ?? 0 }}
                                 </strong>
                             </div>
                             <div class="ra-low">
@@ -150,7 +149,7 @@
                     <div class="ra-month">
                         <div class="ra-last">
                             <strong>
-                                $12,450
+                                ${{ subscriptionOverView?.monthly_revenue ? numberFormat(subscriptionOverView?.monthly_revenue) : 0  }}
                             </strong>
                             <div class="ra-last-content">
                                 <span>
@@ -297,111 +296,84 @@
                 </div>
             </div>
         </div>
-
-        <!-- <Modal>
-          
-      </Modal> -->
-        <div v-if="isOpenNewGroupModal" class="modal__wrapper">
-            <div class="modal__box">
-                <h2 class="box__title">
-                    Create a New User Group
-                </h2>
-                <form>
-                    <div class="row">
-                        <div class="col col-12">
-                            <div class="control">
-                                <label class="control__label new_control-label control__label--small">
-                                    <span class="new-lable">Name</span>
-                                </label>
-                                <div class="control__wrapper">
-                                    <div class="control__elements">
-                                        <div class="flex-grow-1">
-                                            <div class="form-input">
-                                                <div class="form-input__wrapper">
-                                                    <input type="text" class="form-input__input">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col col-12">
-                            <div class="control">
-                                <label class="control__label control__label--small">
-                                    <span class="new-lable">Select the Database this User Group should belong too</span>
-                                    <button class="new_database_button">Create a New Database</button>
-                                </label>
-                                <div class="control__wrapper">
-                                    <div class="control__elements">
-                                        <div class="flex-grow-1">
-                                            <div class="form-input">
-                                                <div class="form-input__wrapper">
-                                                    <select class="form-input__input">
-                                                        <option value="a">Select the database</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col col-12">
-                            <div class="control">
-                                <label class="control__label control__label--small">
-                                    <span class="new-lable">Assign this User Group to Plans</span>
-                                    <button class="new_database_button">Create a New Plan</button>
-                                </label>
-                                <div class="control__wrapper">
-                                    <div class="control__elements">
-                                        <div class="flex-grow-1">
-                                            <div class="form-input">
-                                                <div class="form-input__wrapper">
-                                                    <select class="form-input__input">
-                                                        <option value="a">Select plan</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col col-12">
-                            <button class="new_group_button">Add another plan to this user group</button>
-                        </div>
-
-                        <div class="col col-12 align-right">
-                            <button class="new_user_group">
-                                New User Group
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                <div class="modal__actions" v-on:click="isOpenNewGroupModal = false"><a class="modal__close"><i
-                            class="iconoir-cancel"></i></a> </div>
-            </div>
-        </div>
+        <UserGroupModal v-if="isOpenNewGroupModal" @close="isOpenNewGroupModal = false" />
+       
     </div>
 </template>
 
 <script>
 import modal from '@baserow/modules/core/mixins/modal'
 import error from '@baserow/modules/core/mixins/error'
+import { required } from 'vuelidate/lib/validators'
+import Dropdown from '@baserow/modules/core/components/Dropdown';
+import UserGroupModal from './userGroupModal.vue'
+import { mapGetters } from 'vuex'
 export default {
     name: 'Subscriptions',
     layout: 'app',
     mixins: [modal, error],
+    components: {
+        Dropdown,
+        UserGroupModal
+    },
     data() {
         return {
             isOpenNewGroupModal: false,
             col1Width: 240,
             isCollapsed: false,
+            loading: false,
+            success: false,
+            group: {
+                name: '',
+                database: '',
+                plan: ''
+            },
+            databaselist: [{
+                id: 1,
+                name: 'Database 1'
+            }, {
+                id: 2,
+                name: 'Database 2'
+            }]
         }
     },
     computed: {
-
-    }
+        ...mapGetters({
+            subscriptionOverView: 'subscriptions/subscriotionOverview',
+        })
+    },
+    methods: {
+        numberFormat(value){
+            return new Intl.NumberFormat().format(value)
+        },
+        async createGroup() {
+            this.$v.$touch()
+            if (this.$v.$invalid) {
+                return
+            }
+            this.loading = true
+            this.hideError();
+            try {
+                await this.$store.dispatch('subscriptions/createNewUserGroup', this.group)
+                this.loading = false
+            } catch (error) {
+                this.showError(error)
+            }
+            console.log('create group') 
+        },
+        async getSubscriptionOverView(){
+            await this.$store.dispatch('subscriptions/getSubscriptionOverview')
+        }
+    },
+    created() {
+        if(!this.subscriptionOverView){
+            this.getSubscriptionOverView()
+        }
+    },
+    validations: {
+        group: {
+            name: { required },
+        },
+    },
 }
 </script>
