@@ -75,6 +75,7 @@ import integrationStore from '@baserow/modules/core/store/integration'
 import userSourceStore from '@baserow/modules/core/store/userSource'
 import notificationStore from '@baserow/modules/core/store/notification'
 import userSourceUserStore from '@baserow/modules/core/store/userSourceUser'
+import subscriptionStore from '@baserow/modules/core/store/subscriptions'
 
 import en from '@baserow/modules/core/locales/en.json'
 import fr from '@baserow/modules/core/locales/fr.json'
@@ -138,6 +139,7 @@ export default (context, inject) => {
   registry.registerNamespace('roles')
   registry.registerNamespace('generativeAIModel')
   registry.registerNamespace('onboarding')
+  registry.registerNamespace('subscriptions')
 
   registry.register('settings', new AccountSettingsType(context))
   registry.register('settings', new PasswordSettingsType(context))
@@ -201,6 +203,7 @@ export default (context, inject) => {
   store.registerModule('userSource', userSourceStore)
   store.registerModule('notification', notificationStore)
   store.registerModule('userSourceUser', userSourceUserStore)
+  store.registerModule('subscriptions', subscriptionStore)
 
   registry.register('authProvider', new PasswordAuthProviderType(context))
   registry.register('job', new DuplicateApplicationJobType(context))

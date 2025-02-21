@@ -5,9 +5,12 @@
     :class="classes"
     :disabled="disabled || loading"
     :to="to"
-    v-bind.prop="customBind"
+    v-bind="customBind"
     v-on="$listeners"
-    style="background-color:black !important; color:white;"
+    :style="{ 
+      backgroundColor: ['action', 'transparent'].includes(type) ? '' : 'black !important', 
+      color: ['action', 'transparent'].includes(type) ? '' : 'white !important' 
+    }"
   >
     <i v-if="icon" class="button__icon" :class="icon" />
     <span v-if="hasSlot" class="button__label"><slot></slot></span>
@@ -48,7 +51,7 @@ export default {
       type: String,
       default: 'primary',
       validator(value) {
-        return ['primary', 'secondary', 'danger', 'upload', 'ghost'].includes(
+        return ['primary', 'secondary', 'danger', 'upload', 'ghost','action', 'transparent'].includes(
           value
         )
       },

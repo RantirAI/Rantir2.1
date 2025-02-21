@@ -123,7 +123,7 @@ export const routes = [
   {
     name: 'subscirptions',
     path: '/subscriptions',
-    component: path.resolve(__dirname, 'pages/subscriptions.vue'),
+    component: path.resolve(__dirname, 'pages/subscriptions/index.vue'),
   },
 ]
 
