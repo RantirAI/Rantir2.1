@@ -4,7 +4,7 @@
         <h2 class="box__title">
             Create a New Plan
         </h2>
-        <form @submit.prevent="createGroup">
+        <form @submit.prevent="createPlan">
             <div class="row">
                 <div class="col col-12">
                     <FormGroup
@@ -103,7 +103,7 @@
                             {{ $t('error.thisFieldIsRequired') }}
                         </template>
                     </FormGroup>
-                </div>
+                </div> 
                 <div class="col col-12 align-right">
                     <Button
                         type="action"
@@ -131,7 +131,7 @@ import { required } from 'vuelidate/lib/validators'
 import Dropdown from '@baserow/modules/core/components/Dropdown';
 import subscriptionsService from '@baserow/modules/core/services/subscriptions'
 export default {
-    name: 'newPlanModal',
+    name: 'NewPlanModal',
     mixins: [modal, error],
     components: {
         Dropdown
@@ -155,7 +155,7 @@ export default {
     },
     methods: {
         addNewPriceOption() {
-            this.group.priceOption.push({
+            this.plan.priceOption.push({
                 price: '',
             })
         },
@@ -177,7 +177,7 @@ export default {
             this.loading = true
             this.hideError();
             try {
-                await this.$store.dispatch('subscriptions/createNewUserGroup', this.group)
+                await this.$store.dispatch('subscriptions/createNewUserGroup', this.plan)
                 this.loading = false
             } catch (error) {
                 this.showError(error)
